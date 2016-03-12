@@ -6,6 +6,7 @@
 
 #import "MBProgressHUD.h"
 
+#import "../PCAngularActivityIndicatorView.h"
 
 #if __has_feature(objc_arc)
 	#define MB_AUTORELEASE(exp) exp
@@ -496,18 +497,20 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 - (void)updateIndicators {
 	
-	BOOL isActivityIndicator = [indicator isKindOfClass:[UIActivityIndicatorView class]];
+	BOOL isActivityIndicator = [indicator isKindOfClass:[UIActivityIndicatorView class]] || [indicator isKindOfClass:[PCAngularActivityIndicatorView class]];
 	BOOL isRoundIndicator = [indicator isKindOfClass:[MBRoundProgressView class]];
 	
 	if (mode == MBProgressHUDModeIndeterminate &&  !isActivityIndicator) {
 		// Update to indeterminate indicator
 		[indicator removeFromSuperview];
-		UIActivityIndicatorView *activityIndicator = MB_AUTORELEASE([[UIActivityIndicatorView alloc]
-			initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge]);
-		MB_IF_IOS7_OR_GREATER(activityIndicator.color = [UIColor grayColor];)
-		self.indicator = activityIndicator;        
-		[(UIActivityIndicatorView *)activityIndicator startAnimating];
-		[self addSubview:activityIndicator];
+        
+        PCAngularActivityIndicatorView *activityIndicator = MB_AUTORELEASE([[PCAngularActivityIndicatorView alloc] initWithActivityIndicatorStyle:PCAngularActivityIndicatorViewStyleDefault]);
+        activityIndicator.color = [UIColor colorWithRed:0.0 green:125.0/255.0 blue:245.0/255.0 alpha:1.0];
+        
+        self.indicator = activityIndicator;
+        [activityIndicator startAnimating];
+        
+		[self addSubview:indicator];
 	}
 	else if (mode == MBProgressHUDModeDeterminateHorizontalBar) {
 		// Update to bar determinate indicator
