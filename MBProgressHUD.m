@@ -6,7 +6,7 @@
 
 #import "MBProgressHUD.h"
 
-#import "../PCAngularActivityIndicatorView.h"
+#import "PCAngularActivityIndicatorView.h"
 
 #if __has_feature(objc_arc)
 	#define MB_AUTORELEASE(exp) exp
